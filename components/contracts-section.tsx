@@ -6,7 +6,6 @@ import { Check, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 export function ContractsSection() {
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Mock contract data (replace with API data)
   const contracts = [
     {
       id: 1,
@@ -77,7 +76,7 @@ export function ContractsSection() {
   ];
 
   const handlePrevPage = () => setCurrentPage(prev => Math.max(prev - 1, 1));
-  const handleNextPage = () => setCurrentPage(prev => prev + 1); // Update based on API pagination
+  const handleNextPage = () => setCurrentPage(prev => prev + 1);
 
   return (
     <section className="px-4 md:px-8 lg:px-12 py-16">
@@ -85,14 +84,13 @@ export function ContractsSection() {
         <span className="inline-block w-3 h-3 bg-[#CCFF00] mr-3"></span>
         SUCCESSFUL <u className="underline underline-offset-4 decoration-[#BCED50]">CONTRACTS</u>
       </h2>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {contracts.map(contract => (
           <ContractCard key={contract.id} contract={contract} />
         ))}
       </div>
 
-      {/* Pagination Controls */}
       <div className="mt-12 flex justify-center space-x-4">
         <button 
           className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
@@ -132,7 +130,7 @@ interface ContractCardProps {
 const ContractCard = ({ contract }: ContractCardProps) => (
   <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 p-4">
     <div className="flex justify-between mb-4">
-      <div className="font-bold text-lg ">CONTRACT</div>
+      <div className="font-bold text-lg">CONTRACT</div>
       <div>
         <div className="font-bold">{contract.title}</div>
         <div className="text-sm text-gray-600">
@@ -141,17 +139,14 @@ const ContractCard = ({ contract }: ContractCardProps) => (
       </div>
     </div>
 
-    {/* Client & Talent Sections - Balanced Layout */}
     <div className="grid grid-cols-2 gap-4">
       <ProfileSection type="Client" {...contract.client} />
       <ProfileSection type="Talent" {...contract.talent} />
     </div>
 
-    {/* Contract Details */}
     <ContractDetails contract={contract} />
   </div>
 );
-
 
 const ContractDetails = ({ contract }: { contract: ContractCardProps["contract"] }) => (
   <>
@@ -198,14 +193,21 @@ const ContractDetails = ({ contract }: { contract: ContractCardProps["contract"]
     </div>
   </>
 );
+
+interface ProfileSectionProps {
+  type: "Client" | "Talent";
+  name: string;
+  role: string;
+  avatar: string;
+  rating: number;
+}
+
 const ProfileSection = ({ type, name, role, avatar, rating }: ProfileSectionProps) => (
   <div className="flex items-center bg-gray-100 p-3 rounded-lg w-full">
-    {/* Profile Image - Consistent Size */}
     <div className="relative w-14 h-14">
       <Image src={avatar} alt={type} width={56} height={56} className="rounded-full object-cover" />
     </div>
 
-    {/* Label & Info */}
     <div className="ml-3 flex flex-col flex-grow">
       <div className={`text-xs font-semibold px-2 py-1 rounded-full w-fit ${
         type === "Talent" ? "bg-[#CCFF00] text-black" : "bg-gray-300 text-gray-800"
@@ -217,8 +219,6 @@ const ProfileSection = ({ type, name, role, avatar, rating }: ProfileSectionProp
     </div>
   </div>
 );
-
-
 
 const Star = ({ filled = false }: { filled?: boolean }) => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill={filled ? "#CCFF00" : "none"} stroke={filled ? "#CCFF00" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
